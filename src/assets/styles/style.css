@@ -49363,7 +49363,7 @@ strong {
 	color: var(--text-muted)
 }
 
-.channel-inner:hover .content-1x5b-n {
+:is(.channel.selected, .channel-inner:hover) .content-1x5b-n {
 	background-color: var(--background-modifier-hover)
 }
 
@@ -49371,7 +49371,7 @@ strong {
 	background-color: var(--background-modifier-active)
 }
 
-.modeSelected-346R90 .content-1x5b-n, .modeSelected-346R90:hover .content-1x5b-n {
+.channel.selected .content-1x5b-n, .modeSelected-346R90 .content-1x5b-n, .modeSelected-346R90:hover .content-1x5b-n {
 	background-color: var(--background-modifier-selected)
 }
 
@@ -49383,7 +49383,11 @@ strong {
 	color: var(--channels-default)
 }
 
-.modeMuted-onO3r-:hover .name-23GUGE, .channel-inner:hover .name-23GUGE {
+.channel.selected .name-23GUGE {
+	color: var(--interactive-active)
+}
+
+.channel-inner:hover .name-23GUGE, .modeMuted-onO3r-:hover .name-23GUGE {
 	color: var(--interactive-hover)
 }
 
@@ -49417,12 +49421,22 @@ strong {
 	margin-left: 10px
 }
 
-.containerDefault-3tr_sE, .containerDragAfter-Zk9oyx, .containerDragBefore-1YqewQ, .containerUserOver-98-yc7 {
+.category.fold + .categoryChannels .channel:not(.selected){
+	display: none;
+}
+
+.category.fold + .categoryChannels .channel:not(.selected){
+	display: none;
+}
+.category.fold .arrow {
+	transform: rotate(-90deg)
+}
+.category, .category-rpl, .containerDefault-3tr_sE, .containerDragAfter-Zk9oyx, .containerDragBefore-1YqewQ, .containerUserOver-98-yc7 {
 	position: relative;
 	padding-top: 16px
 }
 
-.containerDefault-3tr_sE:active, .containerDragAfter-Zk9oyx:active, .containerDragBefore-1YqewQ:active, .containerUserOver-98-yc7:active {
+.category:active, .category-rpl:active, .containerDefault-3tr_sE:active, .containerDragAfter-Zk9oyx:active, .containerDragBefore-1YqewQ:active, .containerUserOver-98-yc7:active {
 	transform: translateZ(0)
 }
 
@@ -73585,14 +73599,10 @@ html .invoiceCancelRow-3mYhFX {
 	height: 48px;
 }
 
-.sidebar-icon.create-server {
-	/*! background-color: #36393f; */
-}
-
 .pill-new-server {
 	position: absolute;
 	/*! transform: translateX(-5px); */
-	transition: .15s ease-in-out;
+	transition: .25s ease-in-out;
 	overflow: hidden;
 	left: 0;
 	width: 8px;
@@ -73657,6 +73667,19 @@ html .invoiceCancelRow-3mYhFX {
 
 .sidebar-icon:hover .serverIcon, .sidebar-icon:hover .serverIcon>img {
 	border-radius: 16px;
+}
+
+.sidebar-icon.selected .notif-icon {
+	height: 40px;
+}
+
+.sidebar-icon.selected .serverIcon,
+.sidebar-icon.selected .serverIcon>img {
+	border-radius: 16px;
+}
+
+.sidebar-icon.selected:is(.noIcon, .not-server) .serverIcon {
+	background-color: #5865f2;
 }
 
 .sidebar-icon:hover .notif-icon {

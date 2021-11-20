@@ -1,11 +1,10 @@
 # misc
-testing/
 .env
 *.bk
 *.bk.*
 .vscode
 *.py
-*test.js
+*test*
 package-lock.json
 TODO
 

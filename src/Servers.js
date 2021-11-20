@@ -1,39 +1,37 @@
 import React from "react";
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+const { ipcRenderer } = window.require('electron');
 
-export default function Servers({ guilds, selectedServer, setSelectedServer, changeServer }) {
+export default function Servers({ selectedServer, setSelectedServer }) {
+    const [guilds, setGuilds] = useState(null);
+    const changeServer = e => {
+        let guildID = e.target.dataset.id;
 
-    // const [selectedServer, setSelectedServer] = useState(null);
-    // const [selectedChannel, setSelectedChannel] = useState(null);
-    // const [selectedChannelData, setSelectedChannelData] = useState(null);
-    // const [selectedChannelMessages, setSelectedChannelMessages] = useState(null);
+        // console.log(guildId)
+        if (!guildID) return alert('Guild ID dataset is missing, did you remove it?');
+        ipcRenderer.send('getGuild', { guildID });
 
-    // useEffect(() => {
-    //     if (selectedServer) {
-    //         setSelectedChannel(selectedServer.channels[0]);
-    //     }
-    // }, [selectedServer]);
+        // console.log(guildId, selectedServer, e);
+    }
 
-    // useEffect(() => {
-    //     if (selectedChannel) {
-    //         setSelectedChannelData(selectedChannel.data);
-    //     }
-    // }, [selectedChannel]);
+    useEffect(() => {
+        ipcRenderer.send('getGuilds');
 
-    // useEffect(() => {
-    //     if (selectedChannelData) {
-    //         setSelectedChannelMessages(selectedChannelData.messages);
-    //     }
-    // }, [selectedChannelData]);
+        ipcRenderer.on('guild', (event, data) => {
+            data = JSON.parse(data);
+            // console.log('Guild: ', data); // Debug
+            setSelectedServer(data);
+        });
 
-    // useEffect(() => {
-    //     if (selectedChannelMessages) {
-    //         setSelectedChannelUsers(selectedChannelMessages.users);
-    //     }
-    // }, [selectedChannelMessages]);
+        ipcRenderer.on('guilds', (event, data) => {
+            data = JSON.parse(data);
+            // console.log('Guilds: ', data); // Debug
+            setGuilds(data);
+        });
+    }, []);
 
-    return !guilds ? <div>...</div> : guilds.map(guild => (
-        <div className={`sidebar-icon sidebar-sep create-server ${guild.iconURL ? '' : 'noIcon'}`} key={guild.id}>
+    return !guilds ? <div></div> : guilds.map(guild => (
+        <div className={`server sidebar-icon sidebar-sep ${selectedServer?.id === guild.id ? 'selected' : ''} ${guild.iconURL ? '' : 'noIcon'}`} key={guild.id}>
             <div className="pill-new-server">
                 <div className="notif-icon"></div>
             </div>

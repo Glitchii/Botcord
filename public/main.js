@@ -6,6 +6,7 @@ const path = require('path');
 const { Client, Intents } = require('discord.js');
 const net = require('net');
 const exec = require('child_process').exec;
+const { guildJson } = require('./include')
 const port = process.env.PORT ? (process.env.PORT - 100) : 3000;
 
 process.env.START_URL &&= process.env.START_URL.replace(/:\d+/, ':' + port);
@@ -141,27 +142,29 @@ app.on('activate', () => {
 		createWindow();
 });
 
-ipcMain.on('getData', async (event, arg) => {
+ipcMain.on('getAllData', async (event, arg) => {
 	let data = await getData(), jsonData = JSON.stringify(data);
-	event.sender.send('recv', jsonData);
+	event.sender.send('allData', jsonData);
 	// mainWindow.webContents.send('recv', data);
 });
 
+ipcMain.on('getGuilds', async (event, args) =>{
+	let guilds = JSON.stringify(await bot.guilds.cache.map(guildJson));
+	event.sender.send('guilds', guilds);
+});
+
 ipcMain.on('getGuild', async (event, args) => {
-	// let data = await getData(), jsonData = JSON.stringify(data);
 	let guild = bot.guilds.cache.get(args.guildID);
-	console.log(args.guildID, typeof args.guildID);
 	if (!guild) return event.sender.send('err', `Server with ID '${args.guildID}' not found`);
 
-	event.sender.send('guild', JSON.stringify({
-		guild,
-		channels: guild.channels.cache,
-		members: guild.members.cache,
-		roles: guild.roles.cache,
-		emojis: guild.emojis.cache,
-		presences: guild.presences.cache,
-		voiceStates: guild.voiceStates.cache,
-		presence: guild.presence,
-		channel: guild.channels.cache.find(c => c.type === 'text' && !c.deleted),
+	event.sender.send('guild', JSON.stringify(guildJson(guild)));
+});
+
+ipcMain.on('getClient', async (event, args) => {
+	event.sender.send('client', JSON.stringify({
+		...bot.user.toJSON(),
+		presence: bot.presence,
+		guilds: bot.guilds.cache,
+		avatarURL: bot.user.avatarURL?.() || bot.user.avatar || bot.user.defaultAvatarURL,
 	}));
 });

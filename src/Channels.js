@@ -1,10 +1,9 @@
 import React from 'react'
 
 export default function Channels({ channels, guildId, rulesChannel }) {
-    if (!channels) return <div>...</div>;
+    if (!channels) return <div></div>;
 
-    let allChannels = [],
-        sortByPos = arr => arr.sort((a, b) => a.rawPosition - b.rawPosition);
+    let allChannels = [], sortByPos = arr => arr.sort((a, b) => a.rawPosition - b.rawPosition);
 
     for (let c of channels.sort((x, y) => x.type === 'category' ? -1 : 1)) {
         if (!c.deleted) {
@@ -33,12 +32,6 @@ export default function Channels({ channels, guildId, rulesChannel }) {
         }))
     ];
 
-    // console.log(allChannels); // Debug
-    window.others = channels.filter(c => !["text", "voice", "category"].includes(c.type)); // Debug
-    window.all = allChannels; // Debug
-    window.channels = channels; // Debug
-
-    // return <div>...</div>;
     return allChannels.map(channel => {
         switch (channel.type) {
             case 'category':
@@ -69,7 +62,7 @@ function Channel({ channel, guildId, info }) {
     return <div className={`channel ${channel.type || 'text'}`}>
         <div className="iconVisibility channel-inner">
             <div className="content-1x5b-n">
-                <a href={channel.type === 'voice' ? undefined : `/channels/${guildId}/${channel.id}`} className="mainContent-u_9PKf" tabIndex={-1} title={`${channel.name} (${channel.type})`}>
+                <a className="mainContent-u_9PKf" tabIndex={-1} title={`${channel.name} (${channel.type})`}>
                     <div class="iconContainer-1BBaeJ">
                         <svg className="icon-1DeIlz" width={16} height={16} viewBox={channel.type === 'rules' ? '0 0 40 40' : '0 0 24 24'}>
                             <GetChannelIconPath channel={channel} />
@@ -97,11 +90,17 @@ function Channel({ channel, guildId, info }) {
 }
 
 function Category({ channel: category, guildId }) {
+    const categoryClicked = e => {
+        let category = e.target.closest('.category')
+        category.classList.toggle('fold');
+        // TODO: Save fold state in local storage
+    }
+
     return <>
-        <div className="containerDefault-3tr_sE" draggable="true">
+        <div className="category containerDefault-3tr_sE" draggable="true" onClick={categoryClicked}>
             <div className="iconVisibility-fhcwiH wrapper-PY0fhH clickable-536fPF">
                 <div className="mainContent-2h-GEV" tabIndex={-1} title={`${category.name} (${category.type})`}>
-                    <svg className="arrow-gKvcEx icon-2yIBmh" width={24} height={24} viewBox="0 0 24 24">
+                    <svg className="arrow arrow-gKvcEx-rpl arrow-gKvcEx icon-2yIBmh" width={24} height={24} viewBox="0 0 24 24">
                         <path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M16.59 8.59004L12 13.17L7.41 8.59004L6 10L12 16L18 10L16.59 8.59004Z">
                         </path>
                     </svg>

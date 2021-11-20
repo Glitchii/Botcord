@@ -1,7 +1,7 @@
 import React from 'react'
 import BotNameTag from './BotNameTag'
 
-export default function Home({ allData }) {
+export default function Home() {
     return (
         <div className="base-inner home content-98HsJk" style={{ position: "relative" }}>
             <div className="sidebar">
@@ -89,29 +89,16 @@ export default function Home({ allData }) {
                     </div>
                 </nav>
                 <section className="panels-j1Uci_" title="User area">
-                    <BotNameTag bot={allData?.bot} allData={allData} />
+                    <BotNameTag />
                 </section>
             </div>
             <div className="container-1D34oG">
                 <section className="container-1r6BKw themed-ANHk51">
                     <div className="children-19S4PO">
                         <div className="iconWrapper-2OrFZ1">
-                            <svg
-                                x={0}
-                                y={0}
-                                className="icon-22AiRD"
-                                aria-hidden="true"
-                                width={24}
-                                height={24}
-                                viewBox="0 0 24 24"
-                            >
+                            <svg x={0} y={0} className="icon-22AiRD" width={24} height={24} viewBox="0 0 24 24" >
                                 <g fill="none" fillRule="evenodd">
-                                    <path
-                                        fill="currentColor"
-                                        fillRule="nonzero"
-                                        d="M0.5,0 L0.5,1.5 C0.5,5.65 2.71,9.28 6,11.3 L6,16 L21,16 L21,14 C21,11.34 15.67,10 13,10 C13,10 12.83,10 12.75,10 C8,10 4,6 4,1.5 L4,0 L0.5,0 Z M13,0 C10.790861,0 9,1.790861 9,4 C9,6.209139 10.790861,8 13,8 C15.209139,8 17,6.209139 17,4 C17,1.790861 15.209139,0 13,0 Z"
-                                        transform="translate(2 4)"
-                                    />
+                                    <path fill="currentColor" fillRule="nonzero" d="M0.5,0 L0.5,1.5 C0.5,5.65 2.71,9.28 6,11.3 L6,16 L21,16 L21,14 C21,11.34 15.67,10 13,10 C13,10 12.83,10 12.75,10 C8,10 4,6 4,1.5 L4,0 L0.5,0 Z M13,0 C10.790861,0 9,1.790861 9,4 C9,6.209139 10.790861,8 13,8 C15.209139,8 17,6.209139 17,4 C17,1.790861 15.209139,0 13,0 Z" transform="translate(2 4)" />
                                     <path d="M0,0 L24,0 L24,24 L0,24 L0,0 Z M0,0 L24,0 L24,24 L0,24 L0,0 Z M0,0 L24,0 L24,24 L0,24 L0,0 Z" />
                                 </g>
                             </svg>
@@ -120,108 +107,36 @@ export default function Home({ allData }) {
                             Friends
                         </h3>
                         <div className="divider-3FBTu8" />
-                        <div
-                            className="tabBar-ZmDY9v topPill-30KHOu"
-                            aria-orientation="horizontal"
-                            title="Friends"
-                        >
-                            <div
-                                className="item-3HknzM item-PXvHYJ selected-3s45Ha themed-OHr7kt"
-                                aria-selected="true"
-                                aria-controls="online-tab"
-                                aria-disabled="false"
-                                tabIndex={0}
-                            >
+                        <div className="tabBar-ZmDY9v topPill-30KHOu" title="Friends" >
+                            <div className="item-3HknzM item-PXvHYJ selected-3s45Ha themed-OHr7kt" tabIndex={0} >
                                 Online
                             </div>
-                            <div
-                                className="item-3HknzM item-PXvHYJ themed-OHr7kt"
-                                aria-selected="false"
-                                aria-controls="all-tab"
-                                aria-disabled="false"
-                                tabIndex={-1}
-                            >
+                            <div className="item-3HknzM item-PXvHYJ themed-OHr7kt" tabIndex={-1} >
                                 All
                             </div>
-                            <div
-                                className="item-3HknzM item-PXvHYJ themed-OHr7kt"
-                                aria-selected="false"
-                                aria-controls="pending-tab"
-                                aria-disabled="false"
-                                tabIndex={-1}
-                                title="Pending"
-                            >
+                            <div className="item-3HknzM item-PXvHYJ themed-OHr7kt" tabIndex={-1} title="Pending" >
                                 Pending
                             </div>
-                            <div
-                                className="item-3HknzM item-PXvHYJ themed-OHr7kt"
-                                aria-selected="false"
-                                aria-controls="blocked-tab"
-                                aria-disabled="false"
-                                tabIndex={-1}
-                            >
+                            <div className="item-3HknzM item-PXvHYJ themed-OHr7kt" tabIndex={-1} >
                                 Blocked
                             </div>
-                            <div
-                                className="item-3HknzM item-PXvHYJ themed-OHr7kt"
-                                aria-selected="false"
-                                aria-controls="add_friend-tab"
-                                aria-disabled="false"
-                                tabIndex={-1}
-                                title="Add friend"
-                                style={{
-                                    backgroundColor:
-                                        "hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)",
-                                    color: "hsl(0, calc(var(--saturation-factor, 1) * 0%), 100%)"
-                                }}
-                            >
-                                <span aria-hidden="true">Add friend</span>
+                            <div className="item-3HknzM item-PXvHYJ themed-OHr7kt" tabIndex={-1} title="Add friend" style={{ backgroundColor: "hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)", color: "hsl(0, calc(var(--saturation-factor, 1) * 0%), 100%)" }} >
+                                <span>Add friend</span>
                             </div>
                         </div>
                     </div>
                     <div className="toolbar-1t6TWx">
                         <div className="inviteToolbar-3F-l2g">
-                            <div
-                                className="iconWrapper-2OrFZ1 clickable-3rdHwn"
-                                title="New group DM"
-                                tabIndex={0}
-                            >
-                                <svg
-                                    x={0}
-                                    y={0}
-                                    className="icon-22AiRD"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        fill="currentColor"
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M20.998 0V3H23.998V5H20.998V8H18.998V5H15.998V3H18.998V0H20.998ZM2.99805 20V24L8.33205 20H14.998C16.102 20 16.998 19.103 16.998 18V9C16.998 7.896 16.102 7 14.998 7H1.99805C0.894047 7 -0.00195312 7.896 -0.00195312 9V18C-0.00195312 19.103 0.894047 20 1.99805 20H2.99805Z"
-                                    />
+                            <div className="iconWrapper-2OrFZ1 clickable-3rdHwn" title="New group DM" tabIndex={0} >
+                                <svg x={0} y={0} className="icon-22AiRD" width={24} height={24} viewBox="0 0 24 24" >
+                                    <path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M20.998 0V3H23.998V5H20.998V8H18.998V5H15.998V3H18.998V0H20.998ZM2.99805 20V24L8.33205 20H14.998C16.102 20 16.998 19.103 16.998 18V9C16.998 7.896 16.102 7 14.998 7H1.99805C0.894047 7 -0.00195312 7.896 -0.00195312 9V18C-0.00195312 19.103 0.894047 20 1.99805 20H2.99805Z" />
                                 </svg>
                             </div>
                             <div className="divider-3FBTu8" />
                         </div>
-                        <div
-                            className="iconWrapper-2OrFZ1 clickable-3rdHwn"
-                            title="Inbox"
-                            tabIndex={0}
-                        >
-                            <svg
-                                x={0}
-                                y={0}
-                                className="icon-22AiRD"
-                                width={24}
-                                height={24}
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z"
-                                    fill="currentColor"
-                                />
+                        <div className="iconWrapper-2OrFZ1 clickable-3rdHwn" title="Inbox" tabIndex={0} >
+                            <svg x={0} y={0} className="icon-22AiRD" width={24} height={24} viewBox="0 0 24 24" fill="none" >
+                                <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor" />
                             </svg>
                         </div>
                         <a tabIndex={-1} className="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" href="https://support.discord.com" rel="noreferrer noopener" target="_blank">
@@ -235,7 +150,7 @@ export default function Home({ allData }) {
                 </section>
                 <div className="tabBody-3YRQ8W">
                     <div className="peopleColumn-29fq28" id="online-tab">
-                        <div className="peopleList-3c4jOR auto-Ge5KZx scrollerBase-289Jih" tabIndex={0} aria-orientation="vertical" style={{ overflow: "hidden scroll", paddingRight: 0 }}>
+                        <div className="peopleList-3c4jOR auto-Ge5KZx scrollerBase-289Jih" tabIndex={0} style={{ overflow: "hidden scroll", paddingRight: 0 }}>
                             <div className="content-3YMskv" style={{ height: 2830 }}>
                                 <div style={{ height: 0 }} />
                                 <h2 className="title-30qZAO container-2ax-kl">Online — 1</h2>
@@ -286,8 +201,7 @@ export default function Home({ allData }) {
                         </div>
                     </div>
                     <div className="nowPlayingColumn-2sl4cE">
-                        {/* TODO: Show empty text */}
-                    </div>
+                        {/* TODO: Show empty text */} </div>
                 </div>
             </div>
         </div>
