@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+const { ipcRenderer } = window.require('electron');
 
-export default function Channels({ channels, guildId, rulesChannel }) {
+export default function Channels({ channels, guildId, rulesChannel, selectedChannel, setSelectedChannel }) {
     if (!channels) return <div></div>;
 
-    let allChannels = [], sortByPos = arr => arr.sort((a, b) => a.rawPosition - b.rawPosition);
+    let allChannels = [],
+        sortByPos = arr => arr.sort((a, b) => a.rawPosition - b.rawPosition);
 
     for (let c of channels.sort((x, y) => x.type === 'category' ? -1 : 1)) {
         if (!c.deleted) {
@@ -37,7 +39,8 @@ export default function Channels({ channels, guildId, rulesChannel }) {
             case 'category':
                 return <Category key={channel.id} channel={channel} guildId={guildId} />
             default:
-                return <Channel key={channel.id} channel={channel} guildId={guildId} />
+                return <Channel key={channel.id} channel={channel} guildId={guildId}
+                    selectedChannel={selectedChannel} setSelectedChannel={setSelectedChannel} />
         }
     })
 };
@@ -58,8 +61,25 @@ function GetChannelIconPath({ channel }) {
     }
 }
 
-function Channel({ channel, guildId, info }) {
-    return <div className={`channel ${channel.type || 'text'}`}>
+function Channel({ channel, guildId, info, selectedChannel, setSelectedChannel }) {
+    useEffect(() => {
+        ipcRenderer.on('channel', (event, data) => {
+            data = JSON.parse(data);
+            console.log(data);
+            setSelectedChannel();
+        });
+    }, []);
+
+    function channelClicked(e) {
+        let channelID = e.target.dataset.id;
+        console.log(e.target, channelID);
+        if (!channelID)
+            return alert('Channel ID dataset is missing, did you remove it?');
+
+        ipcRenderer.send('getChannel', { channelID });
+    }
+
+    return <div className={`channel ${channel.type || 'text'}`} data-id={channel.id} onClick={channelClicked}>
         <div className="iconVisibility channel-inner">
             <div className="content-1x5b-n">
                 <a className="mainContent-u_9PKf" tabIndex={-1} title={`${channel.name} (${channel.type})`}>

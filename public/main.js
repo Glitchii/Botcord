@@ -6,9 +6,10 @@ const path = require('path');
 const { Client, Intents } = require('discord.js');
 const net = require('net');
 const exec = require('child_process').exec;
-const { guildJson } = require('./include')
+const { guildJson } = require('./include');
 const port = process.env.PORT ? (process.env.PORT - 100) : 3000;
 
+console.log('React port is:', port);
 process.env.START_URL &&= process.env.START_URL.replace(/:\d+/, ':' + port);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -28,21 +29,18 @@ const startUrl = process.env.START_URL || url.format({
 	slashes: true
 });
 
-let startedElectron, getData, mainWindow,
-	sendData = async () => await mainWindow.webContents.send('recv', JSON.stringify(await getData()));
-
-// const WebSocket = require("ws")
-// const wss = new WebSocket.Server({ port: 1040 })
+let startedElectron, getData, mainWindow;
 
 const createWindow = () => {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
+		// height: 475, // Debug
 		width: 1523,
 		height: 825,
 		minWidth: 940,
 		minHeight: 475,
 		darkTheme: true,
-		// alwaysOnTop: true,
+		alwaysOnTop: true, // Debug
 		x: 1080,
 		y: 1920,
 		title: 'BotCord',
@@ -58,18 +56,8 @@ const createWindow = () => {
 		},
 	});
 
-	// Display a loading page untill the Discord client is loaded.
+	// Display a loading page until the Discord client is loaded.
 	mainWindow.loadFile(path.join(__dirname, 'loading.html'));
-
-	// wss.on('connection', w => {
-	// 	w.on('message', data => {
-	// 		console.log(data)
-	// 	})
-	// 	w.on('close', () => {
-	// 		console.log("Closed")
-	// 	})
-	// 	w.send({ lorem: "ipsum", dolor: false, sit: 1 })
-	// })
 
 	bot.on('ready', () => {
 		console.log(`DiscordJS (${bot.user.username}) is loaded`);
@@ -98,8 +86,7 @@ const createWindow = () => {
 		}
 
 		const client = new net.Socket();
-
-		const tryConnecting = setInterval(() => {
+		const tryConnecting = setInterval(() =>
 			client.connect({ port }, () => {
 				client.end();
 				if (!startedElectron) {
@@ -110,24 +97,12 @@ const createWindow = () => {
 					mainWindow.loadURL(startUrl);
 					mainWindow.webContents.openDevTools();
 				}
-			}).on('error', _ => null);
-		}, 1000);
-
-		tryConnection();
+			}).on('error', _ => null), 1000);
 	});
 };
 
-
-bot.on("guildCreate", async guild => {
-	await sendData();
-	console.log(`Joined guild ${guild.name}`);
-});
-
-// say when bot leaves a server
-bot.on("guildDelete", async guild => {
-	await sendData();
-	console.log(`Left guild ${guild.name}`);
-});
+bot.on("guildCreate", async guild => mainWindow.webContents.send('guildJoin', JSON.stringify(guildJson(guild))));
+bot.on("guildDelete", async guild => mainWindow.webContents.send('guildDelete', guild.id));
 
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {
@@ -148,7 +123,7 @@ ipcMain.on('getAllData', async (event, arg) => {
 	// mainWindow.webContents.send('recv', data);
 });
 
-ipcMain.on('getGuilds', async (event, args) =>{
+ipcMain.on('getGuilds', async (event, args) => {
 	let guilds = JSON.stringify(await bot.guilds.cache.map(guildJson));
 	event.sender.send('guilds', guilds);
 });
@@ -158,6 +133,60 @@ ipcMain.on('getGuild', async (event, args) => {
 	if (!guild) return event.sender.send('err', `Server with ID '${args.guildID}' not found`);
 
 	event.sender.send('guild', JSON.stringify(guildJson(guild)));
+});
+
+ipcMain.on('getchannel', async (event, args) => {
+	let guild = bot.guilds.cache.get(args.guildID);
+	if (!guild) return event.sender.send('err', `Server with ID '${args.guildID}' not found`);
+
+	event.sender.send('channel', JSON.stringify(guildJson(guild)));
+});
+
+ipcMain.on('getDisplayRoles', async (event, guildID) => {
+	let displayMember = m => {
+		let assets = m.user.presence.activities[0]?.assets;
+		return {
+			username: m.displayName || m.user.username,
+			id: m.user.id,
+			avatarURL: m.user.avatarURL?.() || m.user.displayAvatarURL?.() || null,
+			color: m.displayHexColor,
+			bot: m.user.bot,
+			verified: m.user.flags?.has('VERIFIED_BOT'),
+			presence: {
+				...m.user.presence.activities[0],
+				assets: {
+					largText: assets?.largeText,
+					smallText: assets?.smallText,
+					largeImage: assets?.largeImageURL?.() || assets?.largeImage,
+					smallImage: assets?.smallImageURL?.() || assets?.smallImage
+				}
+			},
+			status: m.user.presence.status,
+			mobile: m.user.presence.clientStatus?.mobile, // TODO Fix
+		}
+	}
+
+	let guild = bot.guilds.cache.get(guildID),
+		members = guild.members.cache,
+		hoistIDs = members.filter(m => m.presence.status !== 'offline' && m.roles.cache.some(r => r.hoist)).map(m => m.id),
+		hoist = guild.roles.cache.filter(r => r.hoist).sort((x, y) => y.rawPosition - x.rawPosition).array().map(r => {
+			return {
+				// hoist: r.hoist,
+				name: r.name,
+				position: r.rawPosition,
+				members: r.members.array().filter(m => m.presence.status !== 'offline').map(m => displayMember(m))
+			}
+		});
+
+	let obj = {
+		hoist,
+		online: members.filter(m => m.presence.status !== 'offline' && !hoistIDs.includes(m.id))
+			.map(m => displayMember(m)).sort((x, y) => x.username.localeCompare(y.username)),
+		offline: members.filter(m => m.presence.status === 'offline' && !hoistIDs.includes(m.id))
+			.map(m => displayMember(m)).sort((x, y) => x.username.localeCompare(y.username)),
+	}
+	// console.log('Sent: ', obj);
+	event.sender.send('displayRoles', JSON.stringify(obj));
 });
 
 ipcMain.on('getClient', async (event, args) => {

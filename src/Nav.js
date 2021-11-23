@@ -1,9 +1,7 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Servers from './Servers.js';
-const { ipcRenderer } = window.require('electron');
 
-export default function Nav({ selectedServer, setSelectedServer }) {
+export default function Nav({ selectedServer, setSelectedServer, allGuilds, setAllGuilds }) {
 
     return <nav className="wrapper-3NnKdC guilds-1SWlCJ" title="Servers sidebar">
         <ul tabIndex={0} aria-orientation="vertical" className="tree-2wKJdG">
@@ -27,7 +25,7 @@ export default function Nav({ selectedServer, setSelectedServer }) {
                     <div className="guildSeparator-33mFX6" />
                 </div>
                 <div className="servers" title="Servers">
-                    <Servers selectedServer={selectedServer} setSelectedServer={setSelectedServer} />
+                    <Servers selectedServer={selectedServer} setSelectedServer={setSelectedServer} allGuilds={allGuilds} setAllGuilds={setAllGuilds} />
                 </div>
                 <div className="sidebar-icon sidebar-sep not-server create-server green">
                     <div className="serverIcon">

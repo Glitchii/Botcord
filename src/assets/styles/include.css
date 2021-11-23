@@ -1,3 +1,22 @@
 .hidden {
     display: none !important;
 }
+
+.renderCounter {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    z-index: 1000 !important;
+    color: #fff !important;
+    background: #0c0d0e91 !important;
+    padding: 10px !important;
+    border-radius: 4px !important;
+}
+
+.chat.noMemberList .membersList {
+    display: none;
+}
+
+.chat.noMemberList .selected-1GqIat .icon-22AiRD {
+    color: var(--interactive-normal);
+}

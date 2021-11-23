@@ -1,10 +1,10 @@
 const guildJson = guild => {
     return {
         ...guild,
-        splash: guild.splashURL?.() || guild.splash,
-        banner: guild.bannerURL?.() || guild.banner,
+        splash: guild.splashURL?.() || guild.splash || null,
+        banner: guild.bannerURL?.() || guild.banner || null,
         rulesChannelID: guild.rulesChannelID,
-        iconURL: guild.iconURL?.() || guild.icon,
+        iconURL: guild.iconURL?.() || guild.icon || null,
         presences: [...guild.presences.cache],
         owner: guild.owner.toJSON(),
         channels: [

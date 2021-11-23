@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 const { ipcRenderer } = window.require('electron');
 
 function BotNameTag() {
@@ -26,7 +25,7 @@ function BotNameTag() {
                             </div>
                         </foreignObject>
                         {clientInfo.presence.status === 'online' ?
-                            <rect width="10" height="10" x="22" y="22" fill="hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)" mask="url(#svg-mask-status-online)" className="pointerEvents-2zdfdO"></rect> :
+                            <rect width={10} height={10} x={22} y={22} fill="hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)" mask="url(#svg-mask-status-online)" className="pointerEvents-2zdfdO"></rect> :
                             clientInfo.presence.status === 'idle' ?
                                 <rect width={10} height={10} x={22} y={22} fill="hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%)" mask="url(#svg-mask-status-idle)" className="pointerEvents-2zdfdO" /> :
                                 clientInfo.presence.status === 'dnd' ?
@@ -71,4 +70,4 @@ function BotNameTag() {
     )
 }
 
-export default BotNameTag
+export default BotNameTag;
