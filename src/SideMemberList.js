@@ -35,30 +35,28 @@ function Online({ members }) {
                             <div className="name-uJV0GL">
                                 <span className="roleColor-rz2vM0 desaturateUserColors" style={{ color: member?.color !== '#000000' ? member.color : 'inherit' }}>{member.username}</span>
                             </div>
-                            {member.bot ?
+                            {member.bot &&
                                 <span className="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7">
-                                    {member.verified ?
+                                    {member.verified &&
                                         <svg title="Verified bot" className="botTagVerified-1klIIt" width={16} height={16} viewBox="0 0 16 15.2">
                                             <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor">
                                             </path>
-                                        </svg>
-                                        : null}
+                                        </svg>}
                                     <span className="botText-1526X_">BOT</span>
-                                </span>
-                                : null}
+                                </span>}
                         </div>
                         <div className="subText-1KtqkB">
-                            {member.presence?.type ?
+                            {member.presence?.type &&
                                 <div className="user-activity">
                                     <div className="activityText">
                                         {member.presence.type === 'LISTENING' ? 'Listening to' : capitalize(member.presence.type.toLowerCase())}
                                         <strong> {member.presence.name}</strong>
                                     </div>
-                                    {member.presence?.assets?.largeImage && member.presence?.assets?.smallImage ?
+                                    {member.presence?.assets?.largeImage && member.presence?.assets?.smallImage &&
                                         <svg className="icon-15YQ1T" aria-hidden="false" width={16} height={16} viewBox="0 0 16 16">
                                             <path fill="currentColor" d="M6,7 L2,7 L2,6 L6,6 L6,7 Z M8,5 L2,5 L2,4 L8,4 L8,5 Z M8,3 L2,3 L2,2 L8,2 L8,3 Z M8.88888889,0 L1.11111111,0 C0.494444444,0 0,0.494444444 0,1.11111111 L0,8.88888889 C0,9.50253861 0.497461389,10 1.11111111,10 L8.88888889,10 C9.50253861,10 10,9.50253861 10,8.88888889 L10,1.11111111 C10,0.494444444 9.5,0 8.88888889,0 Z" transform="translate(3 3)" />
-                                        </svg> : null}
-                                </div> : null}
+                                        </svg>}
+                                </div>}
                         </div>
                     </div>
                 </div>
@@ -92,17 +90,15 @@ function Offline({ members }) {
                             <div className="name-uJV0GL">
                                 <span className="roleColor-rz2vM0 desaturateUserColors" style={{ color: member?.color !== '#000000' ? member.color : 'inherit' }}>{member.username}</span>
                             </div>
-                            {member.bot ?
+                            {member.bot &&
                                 <span className="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7">
-                                    {member.verified ?
+                                    {member.verified &&
                                         <svg title="Verified bot" className="botTagVerified-1klIIt" width={16} height={16} viewBox="0 0 16 15.2">
                                             <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor">
                                             </path>
-                                        </svg>
-                                        : null}
+                                        </svg>}
                                     <span className="botText-1526X_">BOT</span>
-                                </span>
-                                : null}
+                                </span>}
                         </div>
                         <div className="subText-1KtqkB" />
                     </div>
@@ -148,30 +144,28 @@ function Hoist({ roles }) {
                                 <div className="name-uJV0GL">
                                     <span className="roleColor-rz2vM0 desaturateUserColors" style={{ color: member?.color !== '#000000' ? member.color : 'inherit' }}>{member.username}</span>
                                 </div>
-                                {member.bot ?
+                                {member.bot &&
                                     <span className="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7">
-                                        {member.verified ?
+                                        {member.verified &&
                                             <svg title="Verified bot" className="botTagVerified-1klIIt" width={16} height={16} viewBox="0 0 16 15.2">
                                                 <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor">
                                                 </path>
-                                            </svg>
-                                            : null}
+                                            </svg>}
                                         <span className="botText-1526X_">BOT</span>
-                                    </span>
-                                    : null}
+                                    </span>}
                             </div>
                             <div className="subText-1KtqkB">
-                                {member.presence?.type ?
+                                {member.presence?.type &&
                                     <div className="user-activity">
                                         <div className="activityText">
                                             {member.presence.type === 'LISTENING' ? 'Listening to' : capitalize(member.presence.type.toLowerCase())}
                                             <strong> {member.presence.name}</strong>
                                         </div>
-                                        {member.presence?.assets?.largeImage && member.presence?.assets?.smallImage ?
+                                        {member.presence?.assets?.largeImage && member.presence?.assets?.smallImage &&
                                             <svg className="icon-15YQ1T" aria-hidden="false" width={16} height={16} viewBox="0 0 16 16">
                                                 <path fill="currentColor" d="M6,7 L2,7 L2,6 L6,6 L6,7 Z M8,5 L2,5 L2,4 L8,4 L8,5 Z M8,3 L2,3 L2,2 L8,2 L8,3 Z M8.88888889,0 L1.11111111,0 C0.494444444,0 0,0.494444444 0,1.11111111 L0,8.88888889 C0,9.50253861 0.497461389,10 1.11111111,10 L8.88888889,10 C9.50253861,10 10,9.50253861 10,8.88888889 L10,1.11111111 C10,0.494444444 9.5,0 8.88888889,0 Z" transform="translate(3 3)" />
-                                            </svg> : null}
-                                    </div> : null}
+                                            </svg>}
+                                    </div>}
                             </div>
                         </div>
                     </div>
@@ -181,7 +175,7 @@ function Hoist({ roles }) {
     })
 }
 
-export default function SideMemberList({ selectedServer, setSelectedServer }) {
+export default function SideMemberList({ selectedServer, setSelectedServer, selectedChannel }) {
     const [displayRoles, setDisplayRoles] = useState(null);
 
     useEffect(() => {
@@ -195,12 +189,12 @@ export default function SideMemberList({ selectedServer, setSelectedServer }) {
     useEffect(() => {
         ipcRenderer.on('displayRoles', (event, data) => {
             data = JSON.parse(data);
-            console.log('DisplayRoles: ', data); // Debug
+            // console.log('DisplayRoles: ', data); // Debug
             setDisplayRoles(data);
         });
     }, []);
 
-    return <aside className="membersWrap-2h-GB4 hiddenMembers-2dcs_q membersList" data-title="Members list for general-i-think {#channel#} (channel)">
+    return <aside className="membersWrap-2h-GB4 hiddenMembers-2dcs_q membersList" data-title={`Members list for ${selectedChannel?.name || ''} (channel)`}>
         <div className="members-1998pB thin-1ybCId scrollerBase-289Jih fade-2kXiP2" tabIndex={0} aria-orientation="vertical" style={{ overflow: 'hidden scroll', paddingRight: '0px' }}>
             <div className="content-3YMskv" style={{ height: '1352px' }}>
                 <div style={{ height: '0px' }} />

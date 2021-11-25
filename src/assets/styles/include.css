@@ -20,3 +20,8 @@
 .chat.noMemberList .selected-1GqIat .icon-22AiRD {
     color: var(--interactive-normal);
 }
+
+.discord-messages {
+    border: none;
+    background-color: transparent;
+}

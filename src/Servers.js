@@ -8,7 +8,7 @@ export default function Servers({ selectedServer, setSelectedServer, allGuilds, 
         if (!guildID)
             return alert('Guild ID dataset is missing, did you remove it?');
 
-        ipcRenderer.send('getGuild', { guildID });
+        ipcRenderer.send('getGuild', guildID);
     }
 
     useEffect(() => {

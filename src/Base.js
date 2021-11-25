@@ -6,6 +6,7 @@ const { ipcRenderer } = window.require('electron');
 
 export function Base({ selectedServer, setSelectedServer, allGuilds, setAllGuilds }) {
     const [selectedChannel, setSelectedChannel] = useState(null);
+    const [selectedChannelMessages, setSelectedChannelMessages] = useState(null);
     const [guildChannels, setGuildChannels] = useState(null);
     const [guild, setGuild] = useState(null);
 
@@ -33,11 +34,19 @@ export function Base({ selectedServer, setSelectedServer, allGuilds, setAllGuild
             homeBtn.classList.remove('selected');
             serverView.classList.remove('hidden');
             homeView.classList.add('hidden');
-            // setSelectedChannel(selectedServer.channels[0]);
+
+            let channelTypes = ['text', 'rules'],
+                channels = selectedServer.channels?.filter(e => channelTypes.includes(e.type));
+
+            if (!channels?.length) console.log('No Text Channels');
+            // console.log('Channel selected: ', channels[0]); // Debug
+            setSelectedChannel(channels[0]);
         } else {
             homeBtn.classList.add('selected');
             serverView.classList.add('hidden');
             homeView.classList.remove('hidden');
+            setSelectedChannel(null);
+            setSelectedChannelMessages(null);
         }
 
     }, [selectedServer]);
@@ -66,9 +75,10 @@ export function Base({ selectedServer, setSelectedServer, allGuilds, setAllGuild
                     <div className="content-3YMskv" style={{ height: '838px' }}>
                         <div style={{ height: '0px' }} />
                         <div style={{ height: '16px', display: 'none' }} /> {/* Event Padding div */}
-                        <Channels channels={selectedServer?.channels} guildId={selectedServer?.id}
+                        <Channels channels={selectedServer?.channels} guildID={selectedServer?.id}
                             rulesChannel={selectedServer?.rulesChannelID} selectedChannel={selectedChannel}
-                            setSelectedChannel={setSelectedChannel} />
+                            setSelectedChannel={setSelectedChannel} selectedServer={selectedServer}
+                            setSelectedChannelMessages={setSelectedChannelMessages} />
                     </div>
                 </div>
                 <div className="unreadBottom-1_LF_w unread-15xhX5 container-35XQWE">
@@ -79,6 +89,8 @@ export function Base({ selectedServer, setSelectedServer, allGuilds, setAllGuild
                 <BotNameTag />
             </section>
         </div>
-        <Chat selectedServer={selectedServer} setSelectedServer={setSelectedServer} />
+        <Chat selectedServer={selectedServer} setSelectedServer={setSelectedServer} selectedChannel={selectedChannel}
+            setSelectedChannel={setSelectedChannel} selectedChannelMessages={selectedChannelMessages}
+            setSelectedChannelMessages={setSelectedChannelMessages} />
     </div>
 }
